@@ -1,0 +1,38 @@
+---
+### Create a Storage Class
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: google-storage
+provisioner: kubernetes.io/gce-pd
+### No need for a PV definition as it'll be dynamically created by the provisioner
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-claim
+spec:
+  resources:
+    requests:
+      storage: 50Mi
+  accessModes: 
+    - ReadWriteOnce
+  storageClassName: google-storage
+---
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: random-number-generator
+spec:
+  containers:
+  - image: alpine
+    name: alpine
+    command: ["/bin/sh", "-c"]
+    args: ["shuf -i 0-100 -n 1 >> /opt/"]
+    volumeMounts:
+    - mountPath: /opt
+      name: data-volume
+  volumes:
+  - name: data-volume
+    persistentVolumeClaim:
+      claimName: my-claim
