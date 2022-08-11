@@ -13,3 +13,6 @@ spec:
     requests:
       storage: 50Mi  
   persistentVolumeReclaimPolicy: Delete
+
+
+

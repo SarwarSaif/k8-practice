@@ -5,6 +5,10 @@ kind: StorageClass
 metadata:
   name: google-storage
 provisioner: kubernetes.io/gce-pd
+## Parameters can be different depending on the Cloud Service Provider
+parameters:
+  type: pd-standard 
+  replication-type: none
 ### No need for a PV definition as it'll be dynamically created by the provisioner
 ---
 apiVersion: v1
