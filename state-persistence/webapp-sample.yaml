@@ -1,0 +1,93 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webapp
+spec:
+  containers:
+  - image: kodekloud/event-simulator
+    imagePullPolicy: Always
+    name: event-simulator
+    resources: {}
+    volumeMounts:
+    - mountPath: /log
+      name: data
+      readOnly: true
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  volumes:
+  - name: data
+    hostPath:
+      path: "/var/log/webapp"
+      type: Directory
+---
+# Create a Persistent Volume with the given specification.
+# Volume Name: pv-log
+# Storage: 100Mi
+# Access Modes: ReadWriteMany
+# Host Path: /pv/log
+# Reclaim Policy: Retain
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-log 
+spec:
+  capacity:
+    storage: 100Mi
+  accessModes: 
+    - ReadWriteMany
+  hostPath: 
+    path: /pv/log
+  persistentVolumeReclaimPolicy: Retain
+---
+# Let us claim some of that storage for our application. Create a Persistent Volume Claim with the given specification.
+# Volume Name: claim-log-1
+# Storage Request: 50Mi
+# Access Modes: ReadWriteOnce
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: claim-log-1
+spec:
+  resources:
+    requests: 
+      storage: 50Mi
+  accessModes: 
+    - ReadWriteMany # To bind the pv, the access mode of the pvc should be same as pv
+
+
+---
+# Update the webapp pod to use the persistent volume claim as its storage.
+# Replace hostPath configured earlier with the newly created PersistentVolumeClaim.
+# Name: webapp
+# Image Name: kodekloud/event-simulator
+# Volume: PersistentVolumeClaim=claim-log-1
+# Volume Mount: /log
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webapp
+spec:
+  containers:
+  - image: kodekloud/event-simulator
+    imagePullPolicy: Always
+    name: event-simulator
+    resources: {}
+    volumeMounts:
+    - mountPath: /log
+      name: data
+      readOnly: true
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: claim-log-1

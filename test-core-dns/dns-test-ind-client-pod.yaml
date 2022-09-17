@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod 
+metadata: 
+  name: dns-test-ind-client-pod
+spec:
+  containers:
+  - name: curl
+    image: appropriate/curl
+    command: ["/bin/sh"]
+    args: ["-c","curl 172.17.0.26:80 "]

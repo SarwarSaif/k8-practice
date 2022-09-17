@@ -1,0 +1,175 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+I believe I always have a positive attitude and sense of ownership which helps me took new challenges and continuously improve myself. 
+
+In future I want to better understand the organizational needs so that I can contribute more on improving the efficiency of. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+I think I have done justice to what I have written in my GOAL description. 
+I was really eager to learn new things and tried to capture details on all of these topics during my learning. 
+I took help from other team members, gone through documents and took few courses from udemy for better Understanding.
+I wasn't restricted to just learning by myself and I believe that sharing with others helps myself to better understand something. 
+So I tried to share my understandings regurarly with others and also felt curious to know more.
+One thing I noticed that these Topics are vast and expands over time. 
+So I have to keep learning and will try to deep dive more into these topics.
+
+1. RMOP
+-> Understand RMOP by going through RMOP use cases, architecture and the rmop library.
+2. AI Platform Intro
+-> Get familiar with automation studio, MDCAP, rmop development process, network architecture of ORAN.
+3. CICD
+-> Understand Katana, learn Kubernetes, Jenkins and Groovy. 
+
+
+I have kept my promise to myself by releasing at least one RMOP before this evaluation.  
+Now I have one RMOP in Production.
+It wasn't that easy but I'm happy to be able to contribute something in this short period.
+
+
+
+
+
+
+

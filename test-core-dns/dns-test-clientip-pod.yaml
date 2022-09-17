@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: clientip-pod
+spec:
+  containers:
+  - name: curl
+    image: appropriate/curl
+    command: ["/bin/sh"]
+    args: ["-c","curl 10.107.92.51:4000 "]

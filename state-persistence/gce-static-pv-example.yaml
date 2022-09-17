@@ -1,0 +1,19 @@
+### Create a Disk in Google Cloud
+gcloud beta compute disks create \
+  --size 1GB
+  --region us-east1
+  pd-disk
+### Create a PV manually using the disk
+apiVersion: v1
+kind: PersistentVolume
+metadata: 
+  name: pv-vol1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 500 Mi
+  gcePersistentDisk:
+    pdName: pd-disk
+    fsType: ext4
+    
