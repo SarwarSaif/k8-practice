@@ -1,0 +1,92 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-sleeper-pod
+spec:
+  containers:
+    - name: ubuntu-sleeper
+      image: ubuntu-sleeper
+      command: ["sleep"] ### Similar to Docker's ENTRYPOINT ["sleep"]
+      args: ["10"] ### Similar to Docker's CMD ["10"]
+      ports:
+        - containerPort: 8080
+      env:
+        - name: APP_COLOR
+          value: pink
+        - name: APP_CONFIG
+          valueFrom: APP_CONFIG
+            configMapKeyRef:
+              name: app-config
+              key: 
+        - name: APP_SECRET
+          valueFrom:
+            secretKeyRef:
+---
+## More Elegant way to use envFrom
+# config-map.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  APP_COLOR: blue
+  APP_MODE: prod
+---
+# pod-definition.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webapp-color
+  labels:
+    name: webapp-color
+spec:
+  containers:
+    - name: webapp-color
+      image: webapp-color
+      ports:
+        containerPort: 8080
+      # Inject the whole data in ConfigMap
+      envFrom:
+        - configMapRef:
+            name: app-config
+      # Or Inject a single ENV variable
+      env:
+        - name: APP_COLOR
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: APP_COLOR
+      # Or Inject the data as File as Volumes
+      volumeMounts:
+      - name: app-config-volume
+        mountPath: "/config"
+        readOnly: true
+  volumes:
+  - name: app-config-volume
+    configMap:
+      # Provide the name of the ConfigMap you want to mount.
+      name: app-config
+      # An array of keys from the ConfigMap to create as files
+      items:
+      - key: "app.color"
+        path: "app.color"
+---
+# Here's an example ConfigMap that has some keys with single values, and other keys where the value looks like a fragment of a configuration format.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: game-demo
+data:
+  # property-like keys; each key maps to a simple value
+  player_initial_lives: "3"
+  ui_properties_file_name: "user-interface.properties"
+
+  # file-like keys
+  game.properties: |
+    enemy.types=aliens,monsters
+    player.maximum-lives=5    
+  user-interface.properties: |
+    color.good=purple
+    color.bad=yellow
+    allow.textmode=true    
+
